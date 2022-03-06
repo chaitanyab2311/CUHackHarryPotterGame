@@ -45,13 +45,20 @@ class Bullet {
 
                 if(Game.player.level == 5){
                     Game.EnemiesStopped = true;
-                    let text = new PIXI.Text(`Boss Incominggg!`, Game.textFont);
+                    let text = new PIXI.Text(`Boss Incominggg. Defeat the boss in 15 seconds else you lose!`, Game.textFont);
                     text.position.set((Game.stage.width / 2) - (text.width / 2), (Game.stage.height / 2) - (text.height / 2));
                     Game.layers.text.addChild(text);
 
                     setTimeout(() => {
                         Game.layers.text.removeChild(text);
-                    }, 2000);
+                    }, 1000);
+
+                    setTimeout(() => {
+                        let text = new PIXI.Text(`You Lost. Boss was not defeated!`, Game.textFont);
+                        text.position.set((Game.stage.width / 2) - (text.width / 2), (Game.stage.height / 2) - (text.height / 2));
+                        Game.gameStatus = 2;
+                        Game.layers.text.addChild(text);
+                    }, 15000);
                 }
 
             }
