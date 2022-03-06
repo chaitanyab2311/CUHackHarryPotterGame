@@ -1,8 +1,7 @@
 class Cloud {
     constructor() {
         this.movement = Math.floor(Math.random() * 6) + 1;
-
-
+    
         let landscapeTexture = PIXI.Texture.fromImage('assets/images/Hogwarts_background.jpeg');
         this.sprite = new Game.Sprite(landscapeTexture);
         this.container = new Game.Container();

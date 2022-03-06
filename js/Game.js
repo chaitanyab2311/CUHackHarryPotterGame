@@ -32,7 +32,7 @@ class Game {
 
         Game.tick = 0;
         Game.enemiesInfo = {
-            delay: 4,
+            delay: 15,
             max: 5
         };
 
@@ -44,6 +44,8 @@ class Game {
         Game.bullets = [];
         Game.enemies = [];
         Game.clouds = [];
+        Game.boss;
+        Game.EnemiesStopped = false;
 
         /**
          * Just for Fun.  Can remove later
@@ -73,6 +75,7 @@ class Game {
             background: new Game.Container(),
             enemies: new Game.Container(),
             bullets: new Game.Container(),
+            boss:new Game.Container(),
             text: new Game.Container()
         };
 
@@ -101,6 +104,7 @@ class Game {
             .add(`${Game.assetsDir}harry.png`)
             .add(`${Game.assetsDir}harry_hit.png`)
             .add(`${Game.assetsDir}darkmark.png`)
+            .add(`${Game.assetsDir}bellatrix.png`)
             .add(`${Game.assetsDir}lightening_rotated.png`);
 
         Game.loader.load(_onAssetsLoaded);
@@ -134,6 +138,7 @@ class Game {
         Game.layers.text.addChild(Game.text.lifes);
         Game.layers.text.addChild(Game.text.score);
         Game.layers.text.addChild(Game.text.level);
+
 
         Game.loop();
     }
@@ -179,14 +184,18 @@ class Game {
         /**
          * Enemy Creation
          */
-        if(Game.tick % Game.enemiesInfo.delay === 0) {
-            let enemy = new Enemy({
-                x: this.stage.width,
-                y: Math.floor((Math.random() * (this.stage.height - 20)) + 20),
-                speed: 4,
-                scale: 0.5
-            });
-        }
+
+        if(!Game.EnemiesStopped){
+
+            if(Game.tick % Game.enemiesInfo.delay === 0) {
+                let enemy = new Enemy({
+                    x: this.stage.width,
+                    y: Math.floor((Math.random() * (this.stage.height - 20)) + 20),
+                    speed: 4,
+                    scale: 0.5
+                });
+            }
+            }
 
         Game.player.update();
 
@@ -208,7 +217,22 @@ class Game {
             Game.enemies[j].move();
         }
 
-        Game.text.lifes.text = `Lifes : ${Game.player.lifes}`;
+        if(Game.EnemiesStopped){
+            if(this.boss == undefined){
+                this.boss = new Boss({
+                    x: Game.stage.width,
+                    y: 10,
+                    speed: 4,
+                    scale: 0.3
+                });
+
+            }
+           
+            this.boss.update();
+            this.boss.move();
+        }
+
+        Game.text.lifes.text = `Lives : ${Game.player.lifes}`;
         Game.text.score.text = `Score : ${Game.player.score}`;
         Game.text.level.text = `Level : ${Game.player.level}`;
     }
@@ -260,6 +284,8 @@ class Game {
                 Game.clouds[j].move();
             }
         }
+
+       
     }
 
 

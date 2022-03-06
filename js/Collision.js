@@ -5,6 +5,7 @@ class Collision {
     constructor() {}
 
     static box(r1, r2) {
+       
         let hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
         
         hit = false;
@@ -30,6 +31,8 @@ class Collision {
          */
         vx = r1.centerX - r2.centerX;
         vy = r1.centerY - r2.centerY;
+
+        
         
         /**
          * Combined Half Distances of Two

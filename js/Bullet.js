@@ -37,9 +37,27 @@ class Bullet {
                 Game.enemies[i].explode();
                 this.destroy();
                 if(Game.player.score % 15 == 0){
+                    for(let i =0 ;i < Game.enemies.length ;i++){
+                        Game.enemies[i].destroy();
+                    }
+                    Game.EnemiesStopped = true;
                     Game.player.level++;
                 }
             }
         }
+
+        if(Collision.box(this.sprite, Game.layers.boss)){
+            this.destroy();
+            Game.boss.hits++;
+            Game.player.score+=2;
+            if(Game.boss.hits == 15){
+                Game.boss.destroy();
+                let text = new PIXI.Text(`Boss Defeated! You won!`, Game.textFont);
+                text.position.set((Game.stage.width / 2) - (text.width / 2), (Game.stage.height / 2) - (text.height / 2));
+                Game.layers.text.addChild(text);
+            }
+        }
+
+
     }
 }
