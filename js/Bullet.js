@@ -36,13 +36,24 @@ class Bullet {
                 Game.player.score++;
                 Game.enemies[i].explode();
                 this.destroy();
-                if(Game.player.score % 15 == 0){
+                if(Game.player.score % 10 == 0){
                     for(let i =0 ;i < Game.enemies.length ;i++){
                         Game.enemies[i].destroy();
                     }
-                    Game.EnemiesStopped = true;
                     Game.player.level++;
                 }
+
+                if(Game.player.level == 5){
+                    Game.EnemiesStopped = true;
+                    let text = new PIXI.Text(`Boss Incominggg!`, Game.textFont);
+                    text.position.set((Game.stage.width / 2) - (text.width / 2), (Game.stage.height / 2) - (text.height / 2));
+                    Game.layers.text.addChild(text);
+
+                    setTimeout(() => {
+                        Game.layers.text.removeChild(text);
+                    }, 2000);
+                }
+
             }
         }
 
@@ -50,7 +61,13 @@ class Bullet {
             this.destroy();
             Game.boss.hits++;
             Game.player.score+=2;
-            if(Game.boss.hits == 15){
+
+            if(Game.boss.hits % 5 == 0){
+                console.log("Boss Attacking");
+                Game.boss.attack();
+            }
+
+            if(Game.boss.hits == 30){
                 Game.boss.destroy();
                 let text = new PIXI.Text(`Boss Defeated! You won!`, Game.textFont);
                 text.position.set((Game.stage.width / 2) - (text.width / 2), (Game.stage.height / 2) - (text.height / 2));

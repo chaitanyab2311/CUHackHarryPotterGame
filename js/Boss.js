@@ -85,4 +85,14 @@
         Game.layers.boss.removeChild(this.sprite);
     }
 
+
+    attack(){
+        // for(let i = Game.stage.width/2 + 100 ; i >=0 ; i--){
+        //     Game.layers.boss.x-=1;
+        //     if(Collision.box(Game.layers.boss, Game.player.sprite)) {
+                
+        //     }
+        // }
+    }
+
 }
